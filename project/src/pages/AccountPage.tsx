@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Package, Heart, Settings, LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
@@ -9,6 +9,22 @@ const AccountPage: React.FC = () => {
   const { wishlist } = useWishlist();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('profile');
+  const [trackOrderModal, setTrackOrderModal] = useState<{ open: boolean; order: any | null }>({ open: false, order: null });
+  const [orders, setOrders] = useState<any[]>([]);
+  const [loadingOrders, setLoadingOrders] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setLoadingOrders(true);
+      fetch(`/api/orders?userId=${user.id}`)
+        .then(res => res.json())
+        .then(data => {
+          setOrders(data);
+          setLoadingOrders(false);
+        })
+        .catch(() => setLoadingOrders(false));
+    }
+  }, [user]);
 
   if (!user) {
     navigate('/login');
@@ -20,27 +36,8 @@ const AccountPage: React.FC = () => {
     navigate('/');
   };
 
-  const mockOrders = [
-    {
-      id: 'ORD-001',
-      date: '2024-01-15',
-      status: 'Delivered',
-      total: 189.00,
-      items: [
-        { name: 'Elegant Maternity Wrap Dress', quantity: 1, price: 129.00 },
-        { name: 'Classic Maternity Blazer', quantity: 1, price: 189.00 }
-      ]
-    },
-    {
-      id: 'ORD-002',
-      date: '2024-01-10',
-      status: 'Shipped',
-      total: 89.00,
-      items: [
-        { name: 'Comfortable Maternity Jeans', quantity: 1, price: 89.00 }
-      ]
-    }
-  ];
+  // Status steps for progress bar
+  const statusSteps = ['Processing', 'Packed', 'Shipped', 'Out for Delivery', 'Delivered', 'Cancelled'];
 
   return (
     <div className="min-h-screen bg-white">
@@ -51,6 +48,68 @@ const AccountPage: React.FC = () => {
           <p className="text-gray-600 mt-2">Welcome back, {user.firstName}!</p>
         </div>
       </div>
+
+      {/* Track Order Modal */}
+      {trackOrderModal.open && trackOrderModal.order && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+          <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full text-center relative animate-fade-in">
+            <button
+              className="absolute top-3 right-3 text-gray-400 hover:text-gray-700 text-2xl font-bold"
+              onClick={() => setTrackOrderModal({ open: false, order: null })}
+              aria-label="Close"
+            >
+              &times;
+            </button>
+            <h2 className="text-2xl font-serif mb-4 text-gray-900">Order {trackOrderModal.order.id} Status</h2>
+            {/* Progress Bar */}
+            <div className="flex items-center justify-between mb-6">
+              {statusSteps.map((step, idx) => {
+                const currentIdx = statusSteps.indexOf(trackOrderModal.order.status);
+                const isActive = idx <= currentIdx && trackOrderModal.order.status !== 'Cancelled';
+                const isCancelled = trackOrderModal.order.status === 'Cancelled';
+                return (
+                  <div key={step} className="flex-1 flex flex-col items-center">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm mb-1 border-2 ${
+                      isCancelled && step === 'Cancelled'
+                        ? 'bg-red-100 border-red-400 text-red-700'
+                        : isActive
+                        ? 'bg-primary border-primary text-white'
+                        : 'bg-gray-100 border-gray-300 text-gray-400'
+                    }`}>
+                      {idx + 1}
+                    </div>
+                    <span className={`text-xs ${isActive ? 'text-primary' : isCancelled && step === 'Cancelled' ? 'text-red-700' : 'text-gray-400'}`}>{step}</span>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="mb-4 text-gray-700">
+              {trackOrderModal.order.status === 'Delivered' && 'Your order has been delivered.'}
+              {trackOrderModal.order.status === 'Shipped' && 'Your order has shipped and is on its way!'}
+              {trackOrderModal.order.status === 'Processing' && 'Your order is being prepared.'}
+              {trackOrderModal.order.status === 'Packed' && 'Your order has been packed and is ready to ship.'}
+              {trackOrderModal.order.status === 'Out for Delivery' && 'Your order is out for delivery.'}
+              {trackOrderModal.order.status === 'Cancelled' && 'Your order was cancelled.'}
+            </div>
+            <div className="text-left mb-2">
+              <div className="font-semibold mb-1">Items:</div>
+              <ul className="list-disc list-inside text-gray-600">
+                {trackOrderModal.order.items.map((item: any, idx: number) => (
+                  <li key={idx}>{item.name} (x{item.quantity})</li>
+                ))}
+              </ul>
+            </div>
+            <div className="mt-6">
+              <button
+                className="bg-black text-white px-6 py-3 rounded hover:bg-gray-800 transition-colors"
+                onClick={() => setTrackOrderModal({ open: false, order: null })}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -139,41 +198,55 @@ const AccountPage: React.FC = () => {
             {activeTab === 'orders' && (
               <div className="space-y-6">
                 <h2 className="text-2xl font-serif text-black">Order History</h2>
-                <div className="space-y-4">
-                  {mockOrders.map((order) => (
-                    <div key={order.id} className="bg-white border border-gray-200 rounded-lg p-6">
-                      <div className="flex justify-between items-start mb-4">
-                        <div>
-                          <h3 className="font-semibold text-black">Order {order.id}</h3>
-                          <p className="text-sm text-gray-600">Placed on {order.date}</p>
-                        </div>
-                        <div className="text-right">
-                          <span className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${
-                            order.status === 'Delivered' 
-                              ? 'bg-green-100 text-green-800'
-                              : 'bg-blue-100 text-blue-800'
-                          }`}>
-                            {order.status}
-                          </span>
-                          <p className="text-lg font-semibold text-black mt-1">€{order.total.toFixed(2)}</p>
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        {order.items.map((item, index) => (
-                          <div key={index} className="flex justify-between text-sm">
-                            <span className="text-gray-700">{item.name} (x{item.quantity})</span>
-                            <span className="text-black">€{item.price.toFixed(2)}</span>
+                {loadingOrders ? (
+                  <div className="text-center py-8 text-gray-500">Loading orders...</div>
+                ) : orders.length === 0 ? (
+                  <div className="text-center py-8 text-gray-500">No orders found.</div>
+                ) : (
+                  <div className="space-y-4">
+                    {orders.map((order) => (
+                      <div key={order.id} className="bg-white border border-gray-200 rounded-lg p-6">
+                        <div className="flex justify-between items-start mb-4">
+                          <div>
+                            <h3 className="font-semibold text-black">Order {order.id}</h3>
+                            <p className="text-sm text-gray-600">Placed on {order.date}</p>
                           </div>
-                        ))}
+                          <div className="text-right">
+                            <span className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${
+                              order.status === 'Delivered' 
+                                ? 'bg-green-100 text-green-800'
+                                : order.status === 'Cancelled'
+                                ? 'bg-red-100 text-red-700'
+                                : 'bg-blue-100 text-blue-800'
+                            }`}>
+                              {order.status}
+                            </span>
+                            <p className="text-lg font-semibold text-black mt-1">€{order.total.toFixed(2)}</p>
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          {order.items.map((item: any, index: number) => (
+                            <div key={index} className="flex justify-between text-sm">
+                              <span className="text-gray-700">{item.name} (x{item.quantity})</span>
+                              <span className="text-black">€{item.price.toFixed(2)}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="mt-4 pt-4 border-t border-gray-200 flex gap-2">
+                          <button
+                            className="text-black border border-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors"
+                            onClick={() => setTrackOrderModal({ open: true, order })}
+                          >
+                            Track Order
+                          </button>
+                          <button className="text-black border border-gray-300 px-4 py-2 rounded hover:bg-gray-100 transition-colors">
+                            View Details
+                          </button>
+                        </div>
                       </div>
-                      <div className="mt-4 pt-4 border-t border-gray-200">
-                        <button className="text-black border border-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors">
-                          View Details
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
 

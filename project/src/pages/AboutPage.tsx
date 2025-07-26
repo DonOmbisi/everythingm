@@ -1,5 +1,9 @@
 import React from 'react';
 import { Heart, Award, Truck, Leaf } from 'lucide-react';
+import img12 from '../images/img12.jpg';
+import img13 from '../images/img13.jpg';
+import img14 from '../images/img14.jpg';
+import img15 from '../images/img15.jpg';
 
 const AboutPage: React.FC = () => {
   return (
@@ -10,7 +14,7 @@ const AboutPage: React.FC = () => {
           <div className="text-center">
             <h1 className="text-5xl font-serif text-black mb-6">Our Story</h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Born from a vision to celebrate the beauty of motherhood, Pietro Brunelli creates 
+              Born from a vision to celebrate the beauty of motherhood, <span className="text-[#E6397E] font-serif">Everything</span> <span className="text-black font-serif">MATERNITY</span> creates
               sophisticated maternity wear that honors this extraordinary journey with elegance and grace.
             </p>
           </div>
@@ -23,29 +27,25 @@ const AboutPage: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="aspect-[4/5] overflow-hidden rounded-lg">
               <img
-                src="https://images.pexels.com/photos/7156337/pexels-photo-7156337.jpeg"
-                alt="Pietro Brunelli Founder"
+                src={img12}
+                alt="Everything Maternity"
                 className="w-full h-full object-cover"
               />
             </div>
             <div>
-              <h2 className="text-4xl font-serif text-black mb-6">Meet Pietro Brunelli</h2>
+              <h2 className="text-4xl font-serif text-black mb-6">Meet Everything Maternity</h2>
               <div className="space-y-4 text-gray-700 leading-relaxed">
                 <p>
-                  Founded in Milan in 1993, Pietro Brunelli began as a small atelier with a revolutionary idea: 
-                  that pregnancy should never compromise a woman's sense of style and elegance. Pietro, a designer 
-                  with decades of experience in luxury fashion, recognized that expecting mothers deserved 
+                  Founded in Nairobi, <span className="text-[#E6397E] font-serif">Everything</span> <span className="text-black font-serif">MATERNITY</span> began as a small atelier with a revolutionary idea:
+                  that pregnancy should never compromise a woman's sense of style and elegance. Our founders recognized that expecting mothers deserved
                   sophisticated, well-crafted clothing that celebrated their changing bodies.
                 </p>
                 <p>
-                  What started as a personal mission to create beautiful maternity wear for his wife during her 
-                  pregnancy has evolved into an internationally recognized brand trusted by women worldwide. 
-                  Pietro's commitment to exceptional craftsmanship, premium fabrics, and timeless design has 
-                  remained unchanged throughout the decades.
+                  What started as a personal mission to create beautiful maternity wear for loved ones has evolved into a trusted brand for women across Kenya and beyond.
+                  Our commitment to exceptional craftsmanship, premium fabrics, and timeless design remains unchanged.
                 </p>
                 <p>
-                  Today, Pietro Brunelli continues to be a family-run business, with Pietro's daughter Sofia 
-                  bringing fresh perspectives while honoring the brand's founding principles of elegance, 
+                  Today, <span className="text-[#E6397E] font-serif">Everything</span> <span className="text-black font-serif">MATERNITY</span> continues to bring fresh perspectives while honoring our founding principles of elegance,
                   comfort, and empowerment.
                 </p>
               </div>
@@ -72,8 +72,8 @@ const AboutPage: React.FC = () => {
               },
               {
                 icon: Award,
-                title: 'Italian Craftsmanship',
-                description: 'Every garment is meticulously crafted in our Milan atelier using traditional techniques and premium materials.'
+                title: 'Exceptional Craftsmanship',
+                description: 'Every garment is meticulously crafted using traditional techniques and premium materials.'
               },
               {
                 icon: Truck,
@@ -106,7 +106,7 @@ const AboutPage: React.FC = () => {
               <h2 className="text-4xl font-serif text-black mb-6">Artisanal Excellence</h2>
               <div className="space-y-4 text-gray-700 leading-relaxed">
                 <p>
-                  In our Milan atelier, skilled artisans bring each design to life with meticulous attention to detail. 
+                  In our Nairobi workshop, skilled artisans bring each design to life with meticulous attention to detail. 
                   We source only the finest fabrics—luxurious silks, premium cottons, and innovative stretch materials 
                   that move with your body while maintaining their shape and elegance.
                 </p>
@@ -117,35 +117,35 @@ const AboutPage: React.FC = () => {
                 </p>
                 <p>
                   Our commitment to quality means each piece undergoes rigorous testing for comfort, durability, 
-                  and fit, ensuring that Pietro Brunelli garments become treasured additions to your wardrobe.
+                  and fit, ensuring that Everything Maternity garments become treasured additions to your wardrobe.
                 </p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="aspect-square overflow-hidden rounded-lg">
                 <img
-                  src="https://images.pexels.com/photos/7156342/pexels-photo-7156342.jpeg"
+                  src={img13}
                   alt="Craftsmanship detail 1"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="aspect-square overflow-hidden rounded-lg">
                 <img
-                  src="https://images.pexels.com/photos/7156344/pexels-photo-7156344.jpeg"
+                  src={img14}
                   alt="Craftsmanship detail 2"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="aspect-square overflow-hidden rounded-lg">
                 <img
-                  src="https://images.pexels.com/photos/7156346/pexels-photo-7156346.jpeg"
+                  src={img15}
                   alt="Craftsmanship detail 3"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="aspect-square overflow-hidden rounded-lg">
                 <img
-                  src="https://images.pexels.com/photos/7155712/pexels-photo-7155712.jpeg"
+                  src={img12}
                   alt="Craftsmanship detail 4"
                   className="w-full h-full object-cover"
                 />
@@ -161,20 +161,20 @@ const AboutPage: React.FC = () => {
           <h2 className="text-4xl font-serif text-black mb-8">Our Mission</h2>
           <div className="text-lg text-gray-700 leading-relaxed space-y-6">
             <p>
-              At Pietro Brunelli, we believe that every woman deserves to feel beautiful, confident, and 
-              comfortable during one of life's most transformative experiences. Our mission is to create 
+              At <span className="text-[#E6397E] font-serif">Everything</span> <span className="text-black font-serif">MATERNITY</span>, we believe that every woman deserves to feel beautiful, confident, and
+              comfortable during one of life's most transformative experiences. Our mission is to create
               maternity wear that doesn't just accommodate pregnancy—it celebrates it.
             </p>
             <p>
-              We understand that pregnancy is not a time to compromise on style or quality. That's why 
-              every piece in our collection is designed to make you feel as elegant and confident as 
+              We understand that pregnancy is not a time to compromise on style or quality. That's why
+              every piece in our collection is designed to make you feel as elegant and confident as
               you did before pregnancy, while providing the comfort and functionality you need as your body changes.
             </p>
-            <blockquote className="text-2xl font-serif text-black italic border-l-4 border-sage-300 pl-6 my-8">
-              "Pregnancy is not a limitation—it's an inspiration. Every curve tells a story of life, 
+            <blockquote className="text-2xl font-serif text-black italic border-l-4 border-primary pl-6 my-8">
+              "Pregnancy is not a limitation—it's an inspiration. Every curve tells a story of life,
               love, and the incredible strength of women."
             </blockquote>
-            <p className="text-right text-gray-600">— Pietro Brunelli, Founder</p>
+            <p className="text-right text-gray-600">— Everything Maternity Team</p>
           </div>
         </div>
       </section>
@@ -192,7 +192,7 @@ const AboutPage: React.FC = () => {
             {[
               {
                 title: 'Ethical Production',
-                description: 'All our garments are produced in our Milan atelier under fair working conditions, supporting local artisans and their families.'
+                description: 'All our garments are produced in our Nairobi workshop under fair working conditions, supporting local artisans and their families.'
               },
               {
                 title: 'Sustainable Materials',
@@ -218,17 +218,17 @@ const AboutPage: React.FC = () => {
           <h2 className="text-4xl font-serif text-black mb-6">Connect With Us</h2>
           <p className="text-lg text-gray-600 mb-8">
             We'd love to hear from you. Whether you have questions about our collection, 
-            need styling advice, or simply want to share your Pietro Brunelli story, we're here to help.
+            need styling advice, or simply want to share your Everything Maternity story, we're here to help.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="mailto:info@pietrobrunelli.com"
+              href="mailto:info@everythingmaternity.co.ke"
               className="bg-black text-white px-8 py-3 rounded hover:bg-gray-800 transition-colors"
             >
               Contact Us
             </a>
             <a
-              href="https://instagram.com"
+              href="https://instagram.com/everythingmaternitykenya"
               target="_blank"
               rel="noopener noreferrer"
               className="border border-black text-black px-8 py-3 rounded hover:bg-black hover:text-white transition-colors"

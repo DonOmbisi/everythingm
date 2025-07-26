@@ -109,10 +109,10 @@ const CartPage: React.FC = () => {
                         {/* Price */}
                         <div className="text-right">
                           <p className="text-lg font-medium text-black">
-                            €{(item.price * item.quantity).toFixed(2)}
+                            KES {(item.price * item.quantity).toFixed(2)}
                           </p>
                           {item.quantity > 1 && (
-                            <p className="text-sm text-gray-600">€{item.price} each</p>
+                            <p className="text-sm text-gray-600">KES {item.price} each</p>
                           )}
                         </div>
                       </div>
@@ -141,24 +141,24 @@ const CartPage: React.FC = () => {
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Subtotal</span>
-                  <span className="text-black">€{state.total.toFixed(2)}</span>
+                  <span className="text-black">KES {state.total.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Shipping</span>
                   <span className="text-black">
-                    {state.total >= 150 ? 'Free' : '€9.95'}
+                    {state.total >= 5000 ? 'Free' : 'KES 500'}
                   </span>
                 </div>
-                {state.total < 150 && (
+                {state.total < 5000 && (
                   <div className="text-sm text-gray-600 bg-sage-100 p-3 rounded">
-                    Add €{(150 - state.total).toFixed(2)} more for free shipping
+                    Add KES {(5000 - state.total).toFixed(2)} more for free shipping
                   </div>
                 )}
                 <div className="border-t border-beige-200 pt-4">
                   <div className="flex justify-between text-lg font-semibold">
                     <span className="text-black">Total</span>
                     <span className="text-black">
-                      €{(state.total + (state.total >= 150 ? 0 : 9.95)).toFixed(2)}
+                      KES {(state.total + (state.total >= 5000 ? 0 : 500)).toFixed(2)}
                     </span>
                   </div>
                 </div>
@@ -182,7 +182,7 @@ const CartPage: React.FC = () => {
                 </div>
                 <div className="flex items-center space-x-2">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span>Free shipping over €150</span>
+                  <span>Free shipping over KES 5,000</span>
                 </div>
               </div>
             </div>

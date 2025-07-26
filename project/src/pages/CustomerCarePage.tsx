@@ -11,7 +11,7 @@ const CustomerCarePage: React.FC = () => {
       answer: 'We recommend choosing your pre-pregnancy size. Our garments are designed to grow with you throughout your pregnancy. Each product page includes detailed size guides and measurements to help you make the best choice.'
     },
     {
-      question: 'Can I wear Pietro Brunelli pieces after pregnancy?',
+      question: 'Can I wear Everything Maternity pieces after pregnancy?',
       answer: 'Many of our pieces are designed to be worn during and after pregnancy. Look for items marked as "nursing-friendly" which feature discreet access for breastfeeding, and our classic cuts that work beautifully post-pregnancy.'
     },
     {
@@ -23,12 +23,12 @@ const CustomerCarePage: React.FC = () => {
       answer: 'Yes, we ship worldwide. Shipping costs and delivery times vary by location. International orders may be subject to customs duties and taxes, which are the responsibility of the customer.'
     },
     {
-      question: 'How should I care for my Pietro Brunelli garments?',
+      question: 'How should I care for my Everything Maternity garments?',
       answer: 'Care instructions are specific to each garment and can be found on the product page and care label. Generally, we recommend gentle washing in cold water and laying flat to dry to maintain the quality and longevity of your pieces.'
     },
     {
       question: 'Do you offer alterations?',
-      answer: 'While we don\'t offer alteration services directly, our customer service team can recommend trusted tailors in major cities who are familiar with maternity wear and Pietro Brunelli garments.'
+      answer: 'While we don\'t offer alteration services directly, our customer service team can recommend trusted tailors in major cities who are familiar with maternity wear and Everything Maternity garments.'
     }
   ];
 
@@ -39,7 +39,7 @@ const CustomerCarePage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-serif text-black mb-4">Customer Care</h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            We're here to help you with any questions about your Pietro Brunelli experience.
+            We're here to help you with any questions about your Everything Maternity experience.
           </p>
         </div>
       </div>
@@ -56,8 +56,8 @@ const CustomerCarePage: React.FC = () => {
                   <Phone className="h-5 w-5 text-sage-600 mt-1" />
                   <div>
                     <p className="font-medium text-black">Phone</p>
-                    <p className="text-gray-600">+39 02 1234 5678</p>
-                    <p className="text-sm text-gray-500">Mon-Fri 9am-6pm CET</p>
+                    <p className="text-gray-600">0710 464342</p>
+                    <p className="text-sm text-gray-500">Mon-Fri 9am-6pm EAT</p>
                   </div>
                 </div>
 
@@ -65,7 +65,7 @@ const CustomerCarePage: React.FC = () => {
                   <Mail className="h-5 w-5 text-sage-600 mt-1" />
                   <div>
                     <p className="font-medium text-black">Email</p>
-                    <p className="text-gray-600">customercare@pietrobrunelli.com</p>
+                    <p className="text-gray-600">info@everythingmaternity.co.ke</p>
                     <p className="text-sm text-gray-500">Response within 24 hours</p>
                   </div>
                 </div>
@@ -75,15 +75,29 @@ const CustomerCarePage: React.FC = () => {
                   <div>
                     <p className="font-medium text-black">Live Chat</p>
                     <p className="text-gray-600">Available on our website</p>
-                    <p className="text-sm text-gray-500">Mon-Fri 9am-6pm CET</p>
+                    <p className="text-sm text-gray-500">Mon-Fri 9am-6pm EAT</p>
                   </div>
                 </div>
 
                 <div className="flex items-start space-x-3">
                   <MapPin className="h-5 w-5 text-sage-600 mt-1" />
                   <div>
-                    <p className="font-medium text-black">Flagship Store</p>
-                    <p className="text-gray-600">Via Roma 123<br />Milano, 20100<br />Italy</p>
+                    <p className="font-medium text-black">Store Location</p>
+                    <p className="text-gray-800 font-semibold">HISON PLAZA (next to Rafiki Bank)</p>
+                    <p className="text-gray-800 font-semibold">3rd Floor Biashara street</p>
+                    <p className="text-gray-800 font-semibold mb-2">Nairobi, Kenya</p>
+                    <div className="rounded-lg overflow-hidden border border-sage-200 shadow mt-2">
+                      <iframe
+                        title="Store Location Map"
+                        src="https://www.google.com/maps?q=HISON+PLAZA,+Biashara+Street,+Nairobi&output=embed"
+                        width="100%"
+                        height="200"
+                        style={{ border: 0 }}
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                      ></iframe>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -94,8 +108,8 @@ const CustomerCarePage: React.FC = () => {
                   <span className="font-medium text-black">Store Hours</span>
                 </div>
                 <div className="text-sm text-gray-600 space-y-1">
-                  <p>Monday - Saturday: 10am - 7pm</p>
-                  <p>Sunday: 12pm - 6pm</p>
+                  <p>Monday - Saturday: 9am - 6pm</p>
+                  <p>Sunday: 12pm - 5pm</p>
                 </div>
               </div>
             </div>
@@ -137,18 +151,18 @@ const CustomerCarePage: React.FC = () => {
                       <div className="border border-gray-200 rounded-lg p-6">
                         <h4 className="font-medium text-black mb-3">Standard Delivery</h4>
                         <ul className="space-y-2 text-gray-600">
-                          <li>• 3-5 business days</li>
-                          <li>• €9.95 shipping fee</li>
-                          <li>• Free on orders over €150</li>
+                          <li>• 2-3 business days</li>
+                          <li>• KES 500 shipping fee</li>
+                          <li>• Free on orders over KES 5,000</li>
                           <li>• Tracking included</li>
                         </ul>
                       </div>
                       <div className="border border-gray-200 rounded-lg p-6">
                         <h4 className="font-medium text-black mb-3">Express Delivery</h4>
                         <ul className="space-y-2 text-gray-600">
-                          <li>• 1-2 business days</li>
-                          <li>• €19.95 shipping fee</li>
-                          <li>• Available Mon-Fri</li>
+                          <li>• Same day delivery (Nairobi)</li>
+                          <li>• KES 1,000 shipping fee</li>
+                          <li>• Available Mon-Sat</li>
                           <li>• Signature required</li>
                         </ul>
                       </div>
@@ -158,7 +172,7 @@ const CustomerCarePage: React.FC = () => {
                   <div>
                     <h3 className="text-xl font-semibold text-black mb-4">International Shipping</h3>
                     <p className="text-gray-600 mb-4">
-                      We ship to over 50 countries worldwide. Shipping costs and delivery times vary by destination.
+                      We ship to East Africa and select international destinations. Shipping costs and delivery times vary by destination.
                     </p>
                     <div className="bg-beige-50 rounded-lg p-4">
                       <p className="text-sm text-gray-700">
@@ -171,7 +185,7 @@ const CustomerCarePage: React.FC = () => {
                   <div>
                     <h3 className="text-xl font-semibold text-black mb-4">Order Processing</h3>
                     <p className="text-gray-600">
-                      Orders are processed Monday through Friday. Orders placed after 2pm Friday will be processed 
+                      Orders are processed Monday through Saturday. Orders placed after 2pm Saturday will be processed 
                       the following Monday. You'll receive a confirmation email with tracking information once your 
                       order ships.
                     </p>
@@ -184,7 +198,7 @@ const CustomerCarePage: React.FC = () => {
                   <div>
                     <h3 className="text-xl font-semibold text-black mb-4">Return Policy</h3>
                     <p className="text-gray-600 mb-4">
-                      We want you to love your Pietro Brunelli pieces. If you're not completely satisfied, 
+                      We want you to love your Everything Maternity pieces. If you're not completely satisfied, 
                       you may return unworn items within 30 days of delivery.
                     </p>
                     
@@ -205,16 +219,16 @@ const CustomerCarePage: React.FC = () => {
                           <li>1. Contact customer service for return authorization</li>
                           <li>2. Pack items securely in original packaging</li>
                           <li>3. Include return authorization number</li>
-                          <li>4. Drop off at any authorized shipping location</li>
+                          <li>4. Drop off at our store or authorized shipping location</li>
                         </ol>
                       </div>
                       <div>
                         <h4 className="font-medium text-black mb-3">Refund Timeline</h4>
                         <ul className="space-y-2 text-gray-600">
-                          <li>• Refunds processed within 5-7 business days</li>
-                          <li>• Credit card refunds: 3-5 business days</li>
-                          <li>• PayPal refunds: 1-2 business days</li>
-                          <li>• Bank transfers: 5-10 business days</li>
+                          <li>• Refunds processed within 3-5 business days</li>
+                          <li>• M-Pesa refunds: 1-2 business days</li>
+                          <li>• Bank transfers: 3-5 business days</li>
+                          <li>• Cash refunds: Available at store</li>
                         </ul>
                       </div>
                     </div>
@@ -241,7 +255,7 @@ const CustomerCarePage: React.FC = () => {
                   <div>
                     <h3 className="text-xl font-semibold text-black mb-4">General Care Guidelines</h3>
                     <p className="text-gray-600 mb-6">
-                      Proper care ensures your Pietro Brunelli pieces maintain their beauty and quality for years to come.
+                      Proper care ensures your Everything Maternity pieces maintain their beauty and quality for years to come.
                     </p>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

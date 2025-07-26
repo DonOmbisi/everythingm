@@ -186,14 +186,7 @@ const RegisterPage: React.FC = () => {
                 className="w-4 h-4 text-black border-gray-300 rounded focus:ring-black mt-1"
               />
               <span className="text-sm text-gray-600 leading-relaxed">
-                I agree to the{' '}
-                <Link to="/terms" className="text-black hover:text-gray-600 transition-colors">
-                  Terms of Service
-                </Link>{' '}
-                and{' '}
-                <Link to="/privacy" className="text-black hover:text-gray-600 transition-colors">
-                  Privacy Policy
-                </Link>
+                I agree to the terms and conditions of Everything Maternity
               </span>
             </label>
 
