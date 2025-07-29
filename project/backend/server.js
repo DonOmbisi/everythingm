@@ -4,6 +4,8 @@ const getDb = require('./db');
 const { ObjectId } = require('mongodb');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const path = require('path');
+const fs = require('fs');
 const { sendEmail } = require('./emailService');
 const {
   getOrderConfirmationTemplate,
@@ -46,10 +48,13 @@ if (!isVercel) {
   });
 }
 
-// Ensure uploads directory exists
-const uploadsDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
+// Disable file uploads for serverless (Vercel doesn't support persistent file storage)
+if (!isVercel) {
+  // Ensure uploads directory exists
+  const uploadsDir = path.join(__dirname, 'uploads');
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  }
 }
 
 
@@ -67,27 +72,38 @@ app.use('/api/', rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 }));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Static file serving only for non-Vercel environments
+if (!isVercel) {
+  app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+}
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
   next();
 });
 
-// Structured request logging
-app.use(expressWinston.logger({
-  transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({ filename: 'logs/requests.log' })
-  ],
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
-  meta: true,
-  msg: "HTTP {{req.method}} {{req.url}}",
-  expressFormat: true,
-  colorize: false,
-}));
+// Disable file logging for serverless
+if (!isVercel) {
+  app.use(expressWinston.logger({
+    transports: [
+      new winston.transports.Console(),
+      new winston.transports.File({ filename: 'logs/requests.log' })
+    ],
+    format: winston.format.combine(
+      winston.format.timestamp(),
+      winston.format.json()
+    ),
+    meta: true,
+    msg: "HTTP {{req.method}} {{req.url}}",
+    expressFormat: true,
+    colorize: false,
+  }));
+} else {
+  // Simple console logging for Vercel
+  app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+  });
+}
 
 // JWT Secret
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
@@ -370,7 +386,7 @@ app.post('/api/products', authenticateToken, requireAdmin, async (req, res) => {
     };
     const result = await db.collection('products').insertOne(product);
     product.id = result.insertedId.toString();
-    io.emit('productsUpdated'); // Emit real-time update
+    // Real-time updates disabled for serverless
     res.status(201).json(product);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -395,7 +411,7 @@ app.put('/api/products/:id', authenticateToken, requireAdmin, async (req, res) =
     const updated = result.value;
     updated.id = updated._id.toString();
     delete updated._id;
-    io.emit('productsUpdated'); // Emit real-time update
+    // Real-time updates disabled for serverless
     res.json(updated);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -408,7 +424,7 @@ app.delete('/api/products/:id', authenticateToken, requireAdmin, async (req, res
     const db = await getDb();
     const { id } = req.params;
     await db.collection('products').deleteOne({ _id: new ObjectId(id) });
-    io.emit('productsUpdated'); // Emit real-time update
+    // Real-time updates disabled for serverless
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -426,55 +442,25 @@ app.get('/api/test', async (req, res) => {
   }
 });
 
-// --- File Upload ---
-app.post('/api/upload', upload.single('image'), async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded' });
-    }
-
-    // Return the file path that can be stored in the database
-    const filePath = `/uploads/${req.file.filename}`;
-    
-    res.status(201).json({ 
-      success: true, 
-      filePath,
-      fileUrl: `${req.protocol}://${req.get('host')}${filePath}`,
-      filename: req.file.filename,
-      originalname: req.file.originalname,
-      mimetype: req.file.mimetype,
-      size: req.file.size
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Error handler middleware for multer errors
-app.use((err, req, res, next) => {
-  if (err instanceof multer.MulterError) {
-    if (err.code === 'LIMIT_FILE_SIZE') {
-      return res.status(400).json({ error: 'File size too large. Maximum size is 5MB.' });
-    }
-    return res.status(400).json({ error: err.message });
-  } else if (err) {
-    return res.status(500).json({ error: err.message });
-  }
-  next();
+// --- File Upload (Disabled for Vercel) ---
+app.post('/api/upload', async (req, res) => {
+  res.status(501).json({ error: 'File upload not supported in serverless environment. Please use a cloud storage service.' });
 });
 // Sentry error handler (must be after all other middleware)
 app.use(Sentry.Handlers.errorHandler());
-// Structured error logging
-app.use(expressWinston.errorLogger({
-  transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({ filename: 'logs/errors.log' })
-  ],
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  )
-}));
+// Disable file-based error logging for serverless
+if (!isVercel) {
+  app.use(expressWinston.errorLogger({
+    transports: [
+      new winston.transports.Console(),
+      new winston.transports.File({ filename: 'logs/errors.log' })
+    ],
+    format: winston.format.combine(
+      winston.format.timestamp(),
+      winston.format.json()
+    )
+  }));
+}
 
 // --- Orders ---
 app.get('/api/orders', authenticateToken, async (req, res) => {
