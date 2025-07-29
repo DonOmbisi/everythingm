@@ -68,17 +68,6 @@ const Header: React.FC = () => {
 
   return (
     <header className={`bg-white transition-all duration-300 ${isScrolled ? 'shadow-md' : ''} sticky top-0 z-50`}>
-      {/* Top Promotional Banner */}
-      <div className="bg-black text-white py-2">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center items-center space-x-8 text-xs font-medium">
-            <span>NEW ARRIVALS | SHOP NOW</span>
-            <span>BECOME A VIP FOR 10% OFF ALL ORDERS</span>
-            <span>FREE SHIPPING ON ORDERS $100+</span>
-            <span>BUY NOW, PAY LATER. AFTERPAY AVAILABLE ONLINE</span>
-          </div>
-        </div>
-      </div>
 
       {/* Main Header */}
       <div className="bg-white border-b border-gray-100">
